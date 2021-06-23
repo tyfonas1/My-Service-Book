@@ -7,12 +7,20 @@ import {
   View,
 } from 'react-native';
 import {Button, Caption, Card, HelperText, TextInput} from 'react-native-paper';
+import {useAppContext} from '../../config/AppProvider';
 import {colors, device, func, gStyle, images} from '../../constants';
+import useForm from '../../hooks/useForm';
+
 // import {useAppContext} from '../../config/AppProvider';
 
 // components
 
 const LoginForm = () => {
+  const {inputs, handleChange} = useForm({
+    email: '',
+    password: '',
+  });
+  const {login, loading} = useAppContext();
   return (
     <KeyboardAvoidingView
       style={gStyle.contentContainer}
@@ -29,15 +37,16 @@ const LoginForm = () => {
               mode="outlined"
               label="Email"
               placeholder="Email"
-              value=""
+              value={inputs.email}
+              onChangeText={e => handleChange('email', e)}
             />
             <TextInput
               mode="outlined"
               label="pass"
               placeholder="pass"
               secureTextEntry={true}
-              //   onChangeText={(e) => loginFieldsChange('password', e)}
-              value=""
+              onChangeText={e => handleChange('password', e)}
+              value={inputs.password}
             />
           </Card.Content>
 
@@ -65,8 +74,9 @@ const LoginForm = () => {
             <Button
               icon="login"
               mode="contained"
-              style={{backgroundColor: colors.primary}}>
-              Εγγραφή
+              style={{backgroundColor: colors.primary}}
+              onPress={() => login(inputs)}>
+              Σύνδεση
             </Button>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <View
