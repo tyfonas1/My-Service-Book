@@ -298,18 +298,7 @@ function AppProvider(props) {
         .then(myJson => {
           setLoading(false);
           if (myJson.status === 200) {
-            setUser(myJson.body);
-            setToken(myJson.body.token);
-            getApiData(myJson.body.token);
-            getFilteredPosts(null, myJson.body.token);
-            storeData('token', myJson.body.token);
-            storeData('user', myJson.body);
-            setloggedIn(true);
           } else {
-            setLoading(false);
-            // setSnackMsg(translations.LOGIN[myJson.body?.message]);
-            setSnack(!snack);
-            logOut();
           }
         });
     } catch (error) {
